@@ -26,7 +26,7 @@ RenameHeaders <- function(dframe, old, new, debug=FALSE) {
 #'
 #' This function converts a set of character strings to date format
 #' using the specified lubridate method
-#' @param data Data frame to be manipulated
+#' @param data Data frame or character string or vector to be manipulated
 #' @param fields Character vector of fields; not necessary if passing a vector
 #' @param method Which lubridate method to use for parsing
 #' @param debug If TRUE, print debug output
