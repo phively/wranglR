@@ -13,14 +13,14 @@
 #'                       new=c("Sep.L", "Sep.W"))
 RenameHeaders <- function(dframe, old, new, debug=FALSE) {
   # Return an error if old and new are different length
-  if (length(old) != length(new)){
+  if (length(old) != length(new)) {
     stop(paste("Header lengths unequal: old =", length(old), "new =", length(new)))
   }
   # Iterate through each provided header
   for (i in 1:max(length(old), 1)) {
     try(
       colnames(dframe)[which(colnames(dframe) == old[i])] <- new[i],
-      silent = debug
+      silent = !debug
     )
   }
   return(dframe)
@@ -69,7 +69,7 @@ ToDate <- function(data, fields=NA, method="ymd", debug=FALSE) {
     if (alt.branch) {
       tmp.dat <- "data"
     } else {
-      tmp.dat <- parse(text = paste("c(unlist(data[, i]))", sep=""))
+      tmp.dat <- "c(unlist(data[, i]))"
     }
     cmd <- parse(text = paste("lubridate::", method, "(", tmp.dat, ")", sep=""))
     # Debug output
@@ -81,7 +81,7 @@ ToDate <- function(data, fields=NA, method="ymd", debug=FALSE) {
       # Otherwise continue looping
       try(
         data[, i] <- eval(cmd),
-        silent = debug
+        silent = !debug
       )
     }
   }
