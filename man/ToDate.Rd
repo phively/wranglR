@@ -4,14 +4,14 @@
 \alias{ToDate}
 \title{To Date}
 \usage{
-ToDate(data, fields = NA, method = "mdy", debug = FALSE)
+ToDate(data, fields = NA, method = "ymd", debug = FALSE)
 }
 \arguments{
-\item{data}{Data frame to be manipulated}
+\item{data}{Data frame or character string or vector to be manipulated}
 
 \item{fields}{Character vector of fields; not necessary if passing a vector}
 
-\item{method}{Which lubridate method to use for parsing}
+\item{method}{Which lubridate method to use for parsing; defaults to ymd}
 
 \item{debug}{If TRUE, print debug output}
 }
@@ -20,7 +20,7 @@ This function converts a set of character strings to date format
 using the specified lubridate method
 }
 \examples{
-ToDate(c("3-21-1911", "8-8-2008"))
+ToDate(c("3-21-1911", "8-8-2008"), method="mdy")
 
 my.dates <- data.frame(x1 = c("1911-03-21", "2008-08-08"),
                        x2 = c("2009-01-01", "3001-01-01"),
@@ -29,11 +29,11 @@ my.dates <- data.frame(x1 = c("1911-03-21", "2008-08-08"),
 # All three columns are chr
 str(my.dates)
 
-my.dates2 <- ToDate(my.dates, fields=c("x1", "x3"), method="ymd")
+my.dates2 <- ToDate(my.dates, fields=c("x1", "x3"))
 # The first and third column are now Date, but the second is still chr
 str(my.dates2)
 
-my.dates3 <- ToDate(my.dates, fields=(1:3), method="ymd")
+my.dates3 <- ToDate(my.dates, fields=1:3)
 # All three columns are now Date
 str(my.dates3)
 }
