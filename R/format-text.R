@@ -9,8 +9,10 @@
 #' @param debug If TRUE, print debug output
 #' @export
 #' @examples
+#' head(iris)
 #' iris <- RenameHeaders(iris, old=c("Sepal.Length", "Sepal.Width"),
 #'                       new=c("Sep.L", "Sep.W"))
+#' head(iris)
 RenameHeaders <- function(dframe, old, new, debug=FALSE) {
   # Return an error if old and new are different length
   if (length(old) != length(new)) {
@@ -82,6 +84,57 @@ ToDate <- function(data, fields=NA, method="ymd", debug=FALSE) {
       try(
         data[, i] <- eval(cmd),
         silent = !debug
+      )
+    }
+  }
+  return(data)
+}
+
+#' Currency To Numeric
+#'
+#' This function takes a vector or data frame of currency values in character
+#' format, strips out comma delimiters and currency symbols, and converts the
+#' result to numeric.
+#' @param data Data frame or character vector to be manipulated
+#' @param fields Character vector of fields; not necessary if passing a vector
+#' @param debug If TRUE, print debug output
+#' @export
+#' @examples
+#' cash <- c("10,203¢", "$340", "€8,111.10", "£23,040", "¥8300")
+#' CurrencyToNumeric(cash)
+#'
+#' cash.frame <- data.frame(c1 = cash, c2 = cash, c3 = cash, stringsAsFactors = FALSE)
+#'
+#' CurrencyToNumeric(cash.frame)
+#' # Note that this unlists the data because no fields were included
+#'
+#' CurrencyToNumeric(cash.frame, fields=1:2)
+#' CurrencyToNumeric(cash.frame, fields=c("c2", "c3"))
+CurrencyToNumeric <- function(data, fields=NA, debug=FALSE) {
+  # List of symbols to strip
+  # Unicode 00A2 = ¢, 20AC = €, 00A3 = £, 00A5 = ¥
+  sym <- c("\\\\$", "\u00A2", "\u20AC", "\u00A3", "\u00A5", ",")
+  # If fields were not passed, use alternate logic
+  alt.branch <- is.na(fields[1]) & length(fields) == 1
+  for (i in fields) {
+    # Construct command to be evaluated
+    if (alt.branch) {
+      tmp.dat <- "data"
+    } else {
+      tmp.dat <- "c(unlist(data[, i]))"
+    }
+    cmd <- parse(text =
+      paste("mapply(gsub, '(", paste(sym, collapse="|"), ")', '', ", tmp.dat, ")", sep="")
+    )
+    if (debug) {print(paste("Evaluating:", cmd, "@ i =", i))}
+    # If no fields, execute and return the vector
+    if (alt.branch) {
+      return(as.numeric(eval(cmd)))
+    } else {
+      # Otherwise loop
+      try(
+        data[, i] <- as.numeric(eval(cmd)),
+        silent=!debug
       )
     }
   }

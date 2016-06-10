@@ -19,7 +19,9 @@ RenameHeaders(dframe, old, new, debug = FALSE)
 This function renames a set of data frame headers
 }
 \examples{
+head(iris)
 iris <- RenameHeaders(iris, old=c("Sepal.Length", "Sepal.Width"),
                       new=c("Sep.L", "Sep.W"))
+head(iris)
 }
 
