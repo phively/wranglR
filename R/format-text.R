@@ -5,8 +5,8 @@
 #' This function renames a set of data frame headers
 #' @param dframe Data frame to be manipulated
 #' @param old Character vector of old header names
-#' @param new Character vector of new header names, same length as old
-#' @param debug If TRUE, print debug output
+#' @param new Character vector of new header names, same length as \code{old}
+#' @param debug If \code{TRUE}, print debug output
 #' @export
 #' @examples
 #' head(iris)
@@ -34,8 +34,8 @@ RenameHeaders <- function(dframe, old, new, debug=FALSE) {
 #' using the specified lubridate method
 #' @param data Data frame or character string or vector to be manipulated
 #' @param fields Character vector of fields; not necessary if passing a vector
-#' @param method Which lubridate method to use for parsing; defaults to ymd
-#' @param debug If TRUE, print debug output
+#' @param method Which lubridate method to use for parsing; defaults to \code{ymd}
+#' @param debug If \code{TRUE}, print debug output
 #' @export
 #' @examples
 #' ToDate(c("3-21-1911", "8-8-2008"), method="mdy")
@@ -97,7 +97,7 @@ ToDate <- function(data, fields=NA, method="ymd", debug=FALSE) {
 #' result to numeric.
 #' @param data Data frame or character vector to be manipulated
 #' @param fields Character vector of fields; not necessary if passing a vector
-#' @param debug If TRUE, print debug output
+#' @param debug If \code{TRUE}, print debug output
 #' @export
 #' @examples
 #' cash <- c("10,203¢", "$340", "€8,111.10", "£23,040", "¥8300")

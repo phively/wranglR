@@ -11,7 +11,7 @@ CurrencyToNumeric(data, fields = NA, debug = FALSE)
 
 \item{fields}{Character vector of fields; not necessary if passing a vector}
 
-\item{debug}{If TRUE, print debug output}
+\item{debug}{If \code{TRUE}, print debug output}
 }
 \description{
 This function takes a vector or data frame of currency values in character

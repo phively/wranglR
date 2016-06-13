@@ -11,9 +11,9 @@ RenameHeaders(dframe, old, new, debug = FALSE)
 
 \item{old}{Character vector of old header names}
 
-\item{new}{Character vector of new header names, same length as old}
+\item{new}{Character vector of new header names, same length as \code{old}}
 
-\item{debug}{If TRUE, print debug output}
+\item{debug}{If \code{TRUE}, print debug output}
 }
 \description{
 This function renames a set of data frame headers

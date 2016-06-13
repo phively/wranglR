@@ -11,9 +11,9 @@ ToDate(data, fields = NA, method = "ymd", debug = FALSE)
 
 \item{fields}{Character vector of fields; not necessary if passing a vector}
 
-\item{method}{Which lubridate method to use for parsing; defaults to ymd}
+\item{method}{Which lubridate method to use for parsing; defaults to \code{ymd}}
 
-\item{debug}{If TRUE, print debug output}
+\item{debug}{If \code{TRUE}, print debug output}
 }
 \description{
 This function converts a set of character strings to date format
