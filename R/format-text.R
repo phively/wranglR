@@ -28,7 +28,7 @@ RenameHeaders <- function(dframe, old, new, debug=FALSE) {
   return(dframe)
 }
 
-#' To Date
+#' String To Date
 #'
 #' This function converts a set of character strings to date format
 #' using the specified lubridate method
@@ -90,7 +90,7 @@ ToDate <- function(data, fields=NA, method="ymd", debug=FALSE) {
   return(data)
 }
 
-#' Currency To Numeric
+#' Currency String To Numeric
 #'
 #' This function takes a vector or data frame of currency values in character
 #' format, strips out comma delimiters and currency symbols, and converts the

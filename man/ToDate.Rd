@@ -2,7 +2,7 @@
 % Please edit documentation in R/format-text.R
 \name{ToDate}
 \alias{ToDate}
-\title{To Date}
+\title{String To Date}
 \usage{
 ToDate(data, fields = NA, method = "ymd", debug = FALSE)
 }

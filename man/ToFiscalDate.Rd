@@ -2,12 +2,12 @@
 % Please edit documentation in R/format-date.R
 \name{ToFiscalDate}
 \alias{ToFiscalDate}
-\title{Parse Fiscal Dates}
+\title{Calendar To Fiscal Date Parsing}
 \usage{
 ToFiscalDate(date, start.month = 7, output = "year")
 }
 \arguments{
-\item{date}{Date to be parsed}
+\item{date}{Dates to be parsed}
 
 \item{start.month}{Starting month number of the fiscal year; defaults to 7 (July)}
 
@@ -17,5 +17,18 @@ for days passed since the beginning of the fiscal year}
 \description{
 This function takes a vector of dates and returns either the fiscal year, month,
 or week, or months, weeks, or days since the start of the fiscal year.
+}
+\examples{
+(dts <- ToDate(paste("2012", 1:12, 1, sep="-")))
+
+ToFiscalDate(dts)
+# Return fiscal year by default
+
+ToFiscalDate(dts, start.month=9, output="month")
+# Return fiscal month number
+
+ToFiscalDate(dts, start.month=1, output="week")
+ToFiscalDate(dts, start.month=1, output="weeks")
+# 'week' returns week number while 'weeks' returns weeks elapsed
 }
 

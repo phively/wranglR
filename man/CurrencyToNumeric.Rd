@@ -2,7 +2,7 @@
 % Please edit documentation in R/format-text.R
 \name{CurrencyToNumeric}
 \alias{CurrencyToNumeric}
-\title{Currency To Numeric}
+\title{Currency String To Numeric}
 \usage{
 CurrencyToNumeric(data, fields = NA, debug = FALSE)
 }
