@@ -3,10 +3,11 @@
 #' Not In
 #'
 #' This function returns the complement of %in% or match()
+#' @param x left-hand side
+#' @param y right-hand side
 #' @export
-#' @examples
-'%!in%' <- function(x, y) {
-  !('%in%'(x,y))
+'%nin%' <- function(x, y) {
+  !('%in%'(x, y))
 }
 
 
