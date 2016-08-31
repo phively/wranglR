@@ -16,8 +16,7 @@
 #' This function loads
 #' @param input Libraries to be loaded
 #' @export
-#' @examples
-#' # Load a single library
+#' #@examples
 #' Libraries(MASS)
 #'
 #' # Load two libraries at once

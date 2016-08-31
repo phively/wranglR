@@ -12,12 +12,4 @@ Libraries(input)
 \description{
 This function loads
 }
-\examples{
-# Load a single library
-Libraries(MASS)
-
-# Load two libraries at once
-
-# Load libraries from a list
-}
 

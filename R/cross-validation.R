@@ -82,7 +82,7 @@ KFoldXVal <- function(dat, k=2, pct=NA, seed=NA) {
   # Determine the number of observations to be included in the first cross-validation group
   if (!is.na(pct)){
     # If pct was provided, use it to set the size of the first group
-    n.grp1 <- quantile(1:n, probs=pct)
+    n.grp1 <- stats::quantile(1:n, probs=pct)
   } else {
     # Otherwise the groups are equally sized
     n.grp1 <- n/k
@@ -90,7 +90,7 @@ KFoldXVal <- function(dat, k=2, pct=NA, seed=NA) {
   # Reduce n.grp1 if it doesn't leave enough for the other groups, decrease it and print a warning
   if (n - n.grp1 < k - 1) {
     pct.new <- (n - k + 1)/n
-    n.grp1 <- quantile(1:n, probs=pct.new)
+    n.grp1 <- stats::quantile(1:n, probs=pct.new)
     warning(
       paste("'pct = ", pct, "' resulted in size 0 groups; pct decreased to ", pct.new, sep="")
     )
@@ -100,19 +100,19 @@ KFoldXVal <- function(dat, k=2, pct=NA, seed=NA) {
   xval <- list()
   # First group
   end <- n.grp1
-  xval[[1]] <- ind[1:end] %>% na.omit()
+  xval[[1]] <- ind[1:end]
   # Middle groups
   n.grp <- round((n - n.grp1)/(k-1))
   if (k > 2) {
     for (i in 2:(k-1)) {
       start <- floor(end + 1)
       end <- start + n.grp - 1
-      xval[[i]] <- ind[start:end] %>% na.omit()
+      xval[[i]] <- ind[start:end]
     }
   }
   # Last group
   start <- floor(end + 1)
-  xval[[k]] <- ind[start:n] %>% na.omit()
+  xval[[k]] <- ind[start:n]
   # Return final output
   return(xval)
 }
