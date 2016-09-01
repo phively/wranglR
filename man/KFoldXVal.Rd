@@ -4,14 +4,14 @@
 \alias{KFoldXVal}
 \title{K-fold Cross-Validation Samples}
 \usage{
-KFoldXVal(dat, k = 2, pct = NA, seed = NA)
+KFoldXVal(dat, k = 2, prop = NA, seed = NA)
 }
 \arguments{
 \item{dat}{Data to split into cross-validation groups}
 
 \item{k}{Constant k for k-fold cross-validation; defaults to 2}
 
-\item{pct}{Percent of data to include in the first group; if not provided, defaults
+\item{prop}{Proportion of data to include in the first group; if not provided, defaults
 to equal-sized groups. Remaining groups must be at least size 1, and are as nearly
 equally sized as possible, with any remainder included in the final group.}
 
@@ -38,16 +38,16 @@ print.kfcv(q)
 q <- KFoldXVal(dat, k=4, seed=123)
 print.kfcv(q)
 
-# pct is used to fix the size of the first group
-q <- KFoldXVal(dat, pct=.75, seed=123)
+# prop is used to fix the size of the first group
+q <- KFoldXVal(dat, prop=.75, seed=123)
 print.kfcv(q)
 
 # This may be freely combined with k, provided that there are
 # sufficient observations that all groups are at least size 1
-q <- KFoldXVal(dat, k=4, pct=.75, seed=123)
+q <- KFoldXVal(dat, k=4, prop=.75, seed=123)
 print.kfcv(q)
 
-q <- KFoldXVal(dat, k=4, pct=.9, seed=123)
+q <- KFoldXVal(dat, k=4, prop=.9, seed=123)
 print.kfcv(q)
 }
 

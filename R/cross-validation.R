@@ -6,7 +6,7 @@
 #' cross-validation.
 #' @param dat Data to split into cross-validation groups
 #' @param k Constant k for k-fold cross-validation; defaults to 2
-#' @param pct Percent of data to include in the first group; if not provided, defaults
+#' @param prop Proportion of data to include in the first group; if not provided, defaults
 #' to equal-sized groups. Remaining groups must be at least size 1, and are as nearly
 #' equally sized as possible, with any remainder included in the final group.
 #' @param seed Optional random seed to use for sampling
@@ -28,18 +28,18 @@
 #' q <- KFoldXVal(dat, k=4, seed=123)
 #' print.kfcv(q)
 #'
-#' # pct is used to fix the size of the first group
-#' q <- KFoldXVal(dat, pct=.75, seed=123)
+#' # prop is used to fix the size of the first group
+#' q <- KFoldXVal(dat, prop=.75, seed=123)
 #' print.kfcv(q)
 #'
 #' # This may be freely combined with k, provided that there are
 #' # sufficient observations that all groups are at least size 1
-#' q <- KFoldXVal(dat, k=4, pct=.75, seed=123)
+#' q <- KFoldXVal(dat, k=4, prop=.75, seed=123)
 #' print.kfcv(q)
 #'
-#' q <- KFoldXVal(dat, k=4, pct=.9, seed=123)
+#' q <- KFoldXVal(dat, k=4, prop=.9, seed=123)
 #' print.kfcv(q)
-KFoldXVal <- function(dat, k=2, pct=NA, seed=NA) {
+KFoldXVal <- function(dat, k=2, prop=NA, seed=NA) {
   # Required number of indices is length(vector) or nrow(dat)
   if (is.vector(dat)) {
     n <- length(dat)
@@ -60,10 +60,10 @@ KFoldXVal <- function(dat, k=2, pct=NA, seed=NA) {
         paste("Invalid k, use k <= number of observations")
       )
     }
-    # Check that pct is in the range (0, 1)
-    if (!is.na(pct) && (0 >= pct | 1 <= pct)) {
+    # Check that prop is in the range (0, 1)
+    if (!is.na(prop) && (0 >= prop | 1 <= prop)) {
       stop(
-        paste("Invalid pct, must be a percent in the range 0 < pct < 1")
+        paste("Invalid prop, must be a fraction in the range 0 < prop < 1")
       )
     }
     # Check that any present seed is numeric, and set it
@@ -80,19 +80,19 @@ KFoldXVal <- function(dat, k=2, pct=NA, seed=NA) {
   # Generate random list of indices
   ind <- sample(1:n, size=n, replace=F)
   # Determine the number of observations to be included in the first cross-validation group
-  if (!is.na(pct)){
-    # If pct was provided, use it to set the size of the first group
-    n.grp1 <- stats::quantile(1:n, probs=pct)
+  if (!is.na(prop)){
+    # If prop was provided, use it to set the size of the first group
+    n.grp1 <- stats::quantile(1:n, probs=prop)
   } else {
     # Otherwise the groups are equally sized
     n.grp1 <- n/k
   }
   # Reduce n.grp1 if it doesn't leave enough for the other groups, decrease it and print a warning
   if (n - n.grp1 < k - 1) {
-    pct.new <- (n - k + 1)/n
-    n.grp1 <- stats::quantile(1:n, probs=pct.new)
+    prop.new <- (n - k + 1)/n
+    n.grp1 <- stats::quantile(1:n, probs=prop.new)
     warning(
-      paste("'pct = ", pct, "' resulted in size 0 groups; pct decreased to ", pct.new, sep="")
+      paste("'prop = ", prop, "' resulted in size 0 groups; prop decreased to ", prop.new, sep="")
     )
   }
   ## Create k-element list of indices
