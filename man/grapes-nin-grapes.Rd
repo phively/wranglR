@@ -12,6 +12,11 @@ x \%nin\% y
 \item{y}{right-hand side}
 }
 \description{
-This function returns the complement of %in% or match()
+This function returns the complement of \code{\%in\%} or \code{match()}.
+}
+\examples{
+# Compare !(\%in\%) to \%nin\%
+!(1:3 \%in\% 2:4)
+1:3 \%nin\% 2:4
 }
 
