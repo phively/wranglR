@@ -4,12 +4,28 @@
 \alias{Libraries}
 \title{Load Packages}
 \usage{
-Libraries(input)
+Libraries(package, ..., install = TRUE)
 }
 \arguments{
-\item{input}{Libraries to be loaded}
+\item{package}{Package name to be loaded.}
+
+\item{install}{Whether to attempt to install missing packages from CRAN. Defaults to \code{TRUE}.}
+
+\item{\ldots}{Optional additional packages to load, to eliminate the need for c().}
 }
 \description{
-This function loads
+This function attempts to load or install one or more packages. Adapted from
+\url{http://stackoverflow.com/questions/4090169/elegant-way-to-check-for-missing-packages-and-install-them}
+}
+\examples{
+# Load libraries from a list
+libs <- c("tools", "utils")
+Libraries(libs)
+
+# Load libraries directly
+Libraries("Matrix", "MASS")
+
+# Warning when loading an unavailable package
+Libraries("StrKcaQYrvg", install=FALSE)
 }
 
