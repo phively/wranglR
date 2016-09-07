@@ -45,14 +45,14 @@ Libraries <- function(package, ..., install=TRUE) {
     package <- c(package, addl)
   }
   # Determine which packages (if any) are not installed
-  not.found <- package[package %nin% utils::installed.packages()[,"Package"]]
+  not.found <- package[package %nin% utils::installed.packages()[, "Package"]]
   # Install needed packages
   if (length(not.found) > 0 & install) {
     pkgs <- paste(not.found, sep="", collapse="', '")
     message(
       paste("Attempting to install '", pkgs, "'", sep="")
     )
-    utils::install.packages(not.found)
+    utils::install.packages(not.found, dependencies=TRUE)
   }
   # Sequentially load packages
   for (p in package) {
