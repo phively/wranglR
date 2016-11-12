@@ -56,7 +56,7 @@ RenameHeaders <- function(dframe, old, new, debug=FALSE) {
 #' str(my.dates3)
 ToDate <- function(data, fields=NA, method="ymd", debug=FALSE) {
   # Check for a valid method
-  valid.methods <- c("dmy", "myd", "ymd", "ydm", "dym", "mdy", "ymd_hms")
+  valid.methods <- c("dmy", "myd", "ymd", "ydm", "dym", "mdy", "ymd_h", "ymd_hm", "ymd_hms")
   if (!(method %in% valid.methods)) {
     stop(
       paste("Invalid method, try one of: "),
