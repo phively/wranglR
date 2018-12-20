@@ -31,4 +31,3 @@ ToFiscalDate(dts, start.month=1, output="week")
 ToFiscalDate(dts, start.month=1, output="weeks")
 # 'week' returns week number while 'weeks' returns weeks elapsed
 }
-

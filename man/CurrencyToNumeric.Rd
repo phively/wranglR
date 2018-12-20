@@ -30,4 +30,3 @@ CurrencyToNumeric(cash.frame)
 CurrencyToNumeric(cash.frame, fields=1:2)
 CurrencyToNumeric(cash.frame, fields=c("c2", "c3"))
 }
-

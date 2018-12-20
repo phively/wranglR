@@ -37,4 +37,3 @@ ReplaceValues(dat, "a", NA)
 # Replace a and e with "vowel"
 ReplaceValues(dat, "\%in\% c('a', 'e')", "vowel", condition=TRUE)
 }
-

@@ -18,4 +18,3 @@ to \code{month}}
 This function takes a vector of dates and rolls them up to the specified time
 unit, setting all smaller increments to 0 or 1 as applicable.
 }
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/format-date.R
 \name{GetFYDate}
 \alias{GetFYDate}
-\alias{GetFYEnd}
 \alias{GetFYStart}
+\alias{GetFYEnd}
 \title{Fiscal Date Generation}
 \usage{
 GetFYStart(date, start.month = 7)
@@ -31,4 +31,3 @@ GetFYEnd(dts, start.month = 1)
 GetFYEnd(dts, start.month = 3)
 # Properly accounts for leap years
 }
-

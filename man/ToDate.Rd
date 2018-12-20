@@ -37,4 +37,3 @@ my.dates3 <- ToDate(my.dates, fields=1:3)
 # All three columns are now Date
 str(my.dates3)
 }
-

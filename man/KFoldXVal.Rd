@@ -50,4 +50,3 @@ print.kfcv(q)
 q <- KFoldXVal(dat, k=4, prop=.9, seed=123)
 print.kfcv(q)
 }
-

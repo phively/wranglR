@@ -19,4 +19,3 @@ This function returns the complement of \code{\%in\%} or \code{match()}.
 !(1:3 \%in\% 2:4)
 1:3 \%nin\% 2:4
 }
-
