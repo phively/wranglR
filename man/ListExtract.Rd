@@ -12,7 +12,7 @@ ListExtract(list, name, name.elements = TRUE)
 \item{name}{Quoted name of sub-list item to extract}
 
 \item{name.elements}{Whether to name the new list elements based on the sub-list
-item's name and their order in the ; defaults to \code{TRUE}}
+item's name and their order in the original list; defaults to \code{TRUE}}
 }
 \description{
 Given a list of lists, this function goes through each element and copies
@@ -20,11 +20,11 @@ the named element from each sub-list into a top-level element of a new list.
 }
 \examples{
 
-# Create a nested list
+# Create and view a nested list
 a <- list(letter = 'a', number = 1)
 b <- list(letter = 'b', number = 2)
 c <- list(letter = 'c', number = 3)
-nested <- list(first = a, second = b, third = c)
+(nested <- list(first = a, second = b, third = c))
 
 # Extract the letter element
 ListExtract(nested, 'letter')

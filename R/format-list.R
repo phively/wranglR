@@ -7,15 +7,15 @@
 #' @param list List to be reformatted
 #' @param name Quoted name of sub-list item to extract
 #' @param name.elements Whether to name the new list elements based on the sub-list
-#' item's name and their order in the ; defaults to \code{TRUE}
+#' item's name and their order in the original list; defaults to \code{TRUE}
 #' @export
 #' @examples
 #'
-#' # Create a nested list
+#' # Create and view a nested list
 #' a <- list(letter = 'a', number = 1)
 #' b <- list(letter = 'b', number = 2)
 #' c <- list(letter = 'c', number = 3)
-#' nested <- list(first = a, second = b, third = c)
+#' (nested <- list(first = a, second = b, third = c))
 #'
 #' # Extract the letter element
 #' ListExtract(nested, 'letter')
@@ -28,7 +28,7 @@
 ListExtract <- function(list, name, name.elements = TRUE) {
   list.out <- list()
   for(i in 1:length(list)) {
-    list.out[[i]] <- list[[i]][name]
+    list.out[i] <- list[[i]][name]
     if (name.elements) {
       names(list.out)[i] <- paste0(name, '_', i)
     }
