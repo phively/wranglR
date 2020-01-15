@@ -3,6 +3,7 @@
 export("%nin%")
 export(BinDates)
 export(CurrencyToNumeric)
+export(ExtractCurrency)
 export(GetFYEnd)
 export(GetFYStart)
 export(KFoldXVal)

@@ -140,3 +140,48 @@ CurrencyToNumeric <- function(data, fields=NA, debug=FALSE) {
   }
   return(data)
 }
+
+#' Extract Currency
+#'
+#' This function takes a text string and extracts the dollar amount identified as numeric,
+#' allowing the suffixes K (thousand), M (million), B (billion), and T (trillion)
+#' @param string String to search for dollar amounts
+#' @param debug If \code{TRUE}, print debug output
+#' @export
+#' @examples
+#' ExtractCurrency('$11')
+#'
+#' ExtractCurrency('$100 total')
+#'
+#' ExtractCurrency('Receipt of $11.57')
+#'
+#' ExtractCurrency('$10K-$100K', debug = TRUE) # Returns 10,000 (first match)
+#'
+#' strings <- c('Nearly $23K', 'A $200M Powerball', 'A $3B endowment', 'GDP last year of $17.1T (USD)')
+#' ExtractCurrency(strings, debug = TRUE)
+ExtractCurrency <- function(string, debug=FALSE) {
+  # Look for first dollar amount
+  match <- stringr::str_to_upper(string) %>%
+    stringr::str_extract('\\$[0-9,KMBT\\.]*')
+  # Look for suffixes and identify appropriate multiplier
+  multiplier <- dplyr::case_when(
+    stringr::str_detect(match, 'K') ~ 1E3
+    , stringr::str_detect(match, 'M') ~ 1E6
+    , stringr::str_detect(match, 'B') ~ 1E9
+    , stringr::str_detect(match, 'T') ~ 1E12
+    , TRUE ~ 1
+  )
+  # Strip out non-numeric characters
+  clean <- stringr::str_replace_all(match, '[^0-9\\.]', '') %>% as.numeric()
+  # Debug output
+  if (debug) {
+    paste0(
+      '\n'
+      , '-- Found ', match, ' in "', string, '"\n'
+      , '    ', clean, ' extracted', '\n'
+      , '    ', multiplier, ' multiplier', '\n'
+    ) %>% cat()
+  }
+  # Return result
+  return(clean * multiplier)
+}
