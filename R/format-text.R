@@ -90,6 +90,100 @@ ToDate <- function(data, fields=NA, method="ymd", debug=FALSE) {
   return(data)
 }
 
+
+#' Invalid date string parsing
+#'
+#' This function is a wrapper for ToDate that takes a character string of integers of length
+#' 4 to 8 and attempts to parse out a valid date.
+#' @param datestring Numeric string of length 1-8 to interpret
+#' @param method Position of year, month, day values within the string. Currently ONLY \code{ymd} is supported!
+#' @param fallback_mo Month number to insert, if necessary
+#' @param fallback_day Day number to insert, if necessary
+#' @param debug If \code{TRUE}, print debug output
+#' @export
+#' @examples
+#' weird_dates <- c('20200101', '2020', '20201', '202001', '20200000'
+#' , '2020001', '20200001', '20200199')
+#'
+#' # ToDate returns errors
+#' # But ToDateCleaner attempts to fix the invalid date strings
+#' ToDateCleaner(weird_dates)
+ToDateCleaner <- function(datestring, method = 'ymd', fallback_mo = 1, fallback_day = 1, debug = FALSE) {
+  # Check that fallback_mo and fallback_day are valid
+  if (fallback_mo %nin% 1:12) {
+    stop('Invalid fallback month, please use 1-12')
+  } else if (fallback_day %nin% 1:31) {
+    stop('Invalid fallback day, please use 1-31')
+  }
+  # Clean up inputs
+  datestring <- trimws(datestring)
+  fallback_mo <- stringr::str_pad(fallback_mo, 2, pad = '0')
+  fallback_day <- stringr::str_pad(fallback_day, 2, pad = '0')
+  # Debug output
+  if (debug) {
+    cat(paste('Fallback month/day', fallback_mo, fallback_day, '\n'))
+  }
+  # Attempt using the ToDate function with the existing string or vector
+  out <- suppressWarnings(datestring %>% ToDate(method = method))
+  if (debug) {
+    cat('First pass:', '\n')
+    print(out)
+  }
+  # If it didn't work then use fallback_mo and/or fallback_day to generate a valid date string
+  for (i in 1:length(out)) {
+    # Computations for checks
+    is_dt <- !is.na(out[i])
+    ds <- datestring[i]
+    if (debug) {
+      cat(paste('===== Checking entry', i, ':', ds, out[i], 'is_dt', is_dt, '=====', '\n'))
+    }
+    if (is_dt) {
+      next
+    }
+    # Substrings of datestring (needs to be changed to support methods besides ymd)
+    ds_len <- stringr::str_length(ds)
+    a <- ds %>% substr(1, 4) %>% stringr::str_pad(4, pad = '0')
+    b <- ds %>% substr(5, 6) %>% stringr::str_pad(2, pad = '0')
+    c <- ds %>% substr(7, 8) %>% stringr::str_pad(2, pad = '0')
+    if (debug) {
+      print(paste(ds, 'length', ds_len, a, b, c))
+    }
+    # If length 4 insert fallback_mo and fallback_day
+    if (ds_len == 4) {
+      out[i] <- paste0(a, fallback_mo, fallback_day) %>% ToDate(method = method)
+      if (debug) {
+        print(paste('len 4', a, out[i]))
+      }
+      # If length 5 or 6 assume the extra digits if nonzero are the month and add fallback_day
+    } else if(ds_len %in% 5:6) {
+      if (as.numeric(b) %in% 1:12) {
+        out[i] <- paste0(a, b, fallback_day) %>% ToDate(method = method)
+      } else {
+        out[i] <- paste0(a, fallback_mo, fallback_day) %>% ToDate(method = method)
+      }
+      if (debug) {
+        print(paste('len 5-6', a, b, out[i]))
+      }
+      # If length 7 or 8 check for 0 in the month or day and insert fallback strings as needed
+    } else if (ds_len %in% 7:8) {
+      if (as.numeric(b) == 0 & as.numeric(c) == 0) {
+        out[i] <- paste0(a, fallback_mo, fallback_day) %>% ToDate(method = method)
+      } else if(as.numeric(b) %in% 1:12) {
+        out[i] <- paste0(a, b, fallback_day) %>% ToDate(method = method)
+      } else if(as.numeric(c) %in% 1:31) {
+        out[i] <- paste0(a, fallback_mo, c) %>% ToDate(method = method)
+      }
+      if (debug) {
+        print(paste('len 7-8', a, b, c, out[i]))
+      }
+      # Fallback is just NA
+    } else {
+      out[i] <- NA
+    }
+  }
+  return(out)
+}
+
 #' Currency String To Numeric
 #'
 #' This function takes a vector or data frame of currency values in character

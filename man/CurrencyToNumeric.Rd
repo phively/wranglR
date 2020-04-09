@@ -19,7 +19,7 @@ format, strips out comma delimiters and currency symbols, and converts the
 result to numeric.
 }
 \examples{
-cash <- c("10,203¢", "$340", "€8,111.10", "£23,040", "¥8300")
+cash <- c("10,203Â¢", "$340", "â‚¬8,111.10", "Â£23,040", "Â¥8300")
 CurrencyToNumeric(cash)
 
 cash.frame <- data.frame(c1 = cash, c2 = cash, c3 = cash, stringsAsFactors = FALSE)
